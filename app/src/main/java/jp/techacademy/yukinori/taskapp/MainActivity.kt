@@ -28,7 +28,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        fab.setOnClickListener {view ->
+        fab.setOnClickListener { view ->
             val intent = Intent(this@MainActivity, InputActivity::class.java)
             startActivity(intent)
         }
@@ -41,7 +41,7 @@ class MainActivity : AppCompatActivity() {
         mTaskAdapter = TaskAdapter(this@MainActivity)
 
         // ListViewをタップしたときの処理
-        listView1.setOnItemClickListener { parent, view, position, id ->
+        listView1.setOnItemClickListener { parent, _, position, _ ->
             // 入力・編集する画面に遷移させる
             val task = parent.adapter.getItem(position) as Task
             val intent = Intent(this@MainActivity, InputActivity::class.java)
@@ -75,7 +75,7 @@ class MainActivity : AppCompatActivity() {
                     PendingIntent.FLAG_UPDATE_CURRENT
                 )
 
-                val alarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
+                val alarmManager = getSystemService(ALARM_SERVICE) as AlarmManager
                 alarmManager.cancel(resultPendingIntent)
 
                 reloadListView()

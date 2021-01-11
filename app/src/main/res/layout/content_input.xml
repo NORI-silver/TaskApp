@@ -17,13 +17,13 @@
         android:id="@+id/title_edit_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="タイトル"/>
+        android:hint="タイトル" />
     <EditText
         android:id="@+id/content_edit_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/title_edit_text"
-        android:hint="内容"/>
+        android:hint="内容" />
     <Button
         android:id="@+id/date_button"
         android:layout_width="0dp"
@@ -32,7 +32,7 @@
         android:layout_alignParentStart="true"
         android:layout_toLeftOf="@id/times_button"
         android:text="----/--/--"
-        style="@style/Widget.AppCompat.Button.Borderless"/>
+        style="@style/Widget.AppCompat.Button.Borderless" />
     <Button
         android:id="@+id/times_button"
         android:layout_width="96dp"

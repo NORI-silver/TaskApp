@@ -25,14 +25,25 @@ class InputActivity : AppCompatActivity() {
 
     private val mOnDateClickListener = View.OnClickListener{
         val datePickerDialog = DatePickerDialog(this,
-        DatePickerDialog.OnDateSetListener { _, year, month, dayOfMonth ->
-            mYear = year
-            mMonth = month
-            mDay = dayOfMonth
-            val dateString = mYear.toString() + "/" + String.format("%02d", mMonth + 1) + "/" + String.format("%02d", mDay)
-            date_button.text = dateString
-        }, mYear, mMonth, mDay)
+            DatePickerDialog.OnDateSetListener { _, year, month, dayOfMonth ->
+                mYear = year
+                mMonth = month
+                mDay = dayOfMonth
+                val dateString = mYear.toString() + "/" + String.format("%02d", mMonth + 1) + "/" + String.format("%02d", mDay)
+                date_button.text = dateString
+            }, mYear, mMonth, mDay)
         datePickerDialog.show()
+    }
+
+    private val mOnTimeClickListener = View.OnClickListener {
+        val timePickerDialog = TimePickerDialog(this,
+            TimePickerDialog.OnTimeSetListener { _, hour, minute ->
+                mHour = hour
+                mMinute = minute
+                val timeString = String.format("%02d", mHour) + ":" + String.format("%02d", mMinute)
+                times_button.text = timeString
+            }, mHour, mMinute, false)
+        timePickerDialog.show()
     }
 
     private val mOnDoneClickListener = View.OnClickListener {
@@ -53,8 +64,8 @@ class InputActivity : AppCompatActivity() {
 
         // UI部品の設定
         date_button.setOnClickListener(mOnDateClickListener)
-        times_button.setOnClickListener(mOnDateClickListener)
-        done_button.setOnClickListener(mOnDateClickListener)
+        times_button.setOnClickListener(mOnTimeClickListener)
+        done_button.setOnClickListener(mOnDoneClickListener)
 
         // EXTRA_TASKからTaskのidを取得して、 idからTaskのインスタンスを取得する
         val intent = intent
@@ -94,13 +105,15 @@ class InputActivity : AppCompatActivity() {
 
     private fun addTask() {
         val realm = Realm.getDefaultInstance()
+
         realm.beginTransaction()
 
         if (mTask == null) {
-            //　新規作成の場合
+            // 新規作成の場合
             mTask = Task()
 
             val taskRealmResults = realm.where(Task::class.java).findAll()
+
             val identifier: Int =
                 if (taskRealmResults.max("id") != null) {
                     taskRealmResults.max("id")!!.toInt() + 1
@@ -133,7 +146,7 @@ class InputActivity : AppCompatActivity() {
             PendingIntent.FLAG_UPDATE_CURRENT
         )
 
-        val alarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
+        val alarmManager = getSystemService(ALARM_SERVICE) as AlarmManager
         alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.timeInMillis, resultPendingIntent)
     }
 }
