@@ -33,6 +33,7 @@
                 android:value="jp.techacademy.yukinori.taskapp.MainActivity" />
         </activity>
 
+
         <receiver
             android:name=".TaskAlarmReceiver"/>
 

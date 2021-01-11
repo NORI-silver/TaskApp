@@ -11,6 +11,7 @@ import androidx.appcompat.app.AlertDialog
 import android.app.AlarmManager
 import android.app.PendingIntent
 import android.content.Context
+import android.widget.SearchView
 
 const val EXTRA_TASK = "jp.techacademy.yukinori.taskapp.TASK"
 
@@ -89,6 +90,12 @@ class MainActivity : AppCompatActivity() {
             true
         }
         reloadListView()
+
+        searchBar.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextChange(newText: String?): Boolean {
+                TODO("Not yet implemented")
+            }
+        })
     }
 
     private fun reloadListView() {
