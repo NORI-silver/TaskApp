@@ -34,6 +34,18 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+        search.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextChange(newText: String): Boolean {
+                // text changed
+                return false
+            }
+            override fun onQueryTextSubmit(query: String): Boolean {
+                // submit button pressed
+                return false
+            }
+        })
+
+
         // Realmの設定
         mRealm = Realm.getDefaultInstance()
         mRealm.addChangeListener(mRealmListener)
@@ -91,11 +103,7 @@ class MainActivity : AppCompatActivity() {
         }
         reloadListView()
 
-        searchBar.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-            override fun onQueryTextChange(newText: String?): Boolean {
-                TODO("Not yet implemented")
-            }
-        })
+
     }
 
     private fun reloadListView() {
