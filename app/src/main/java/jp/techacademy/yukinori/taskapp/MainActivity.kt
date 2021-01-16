@@ -12,6 +12,8 @@ import android.app.AlarmManager
 import android.app.PendingIntent
 import android.content.Context
 import android.widget.SearchView
+import android.util.Log
+import android.widget.TextView
 
 const val EXTRA_TASK = "jp.techacademy.yukinori.taskapp.TASK"
 
@@ -34,16 +36,7 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-        search.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-            override fun onQueryTextChange(newText: String): Boolean {
-                // text changed
-                return false
-            }
-            override fun onQueryTextSubmit(query: String): Boolean {
-                // submit button pressed
-                return false
-            }
-        })
+
 
 
         // Realmの設定
@@ -103,6 +96,37 @@ class MainActivity : AppCompatActivity() {
         }
         reloadListView()
 
+        search.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextChange(newText: String): Boolean {
+                // text changed
+                Log.d("Test", newText)
+                val check = mRealm.where(Task::class.java).equalTo("category", newText).findAll()
+                mTaskAdapter.taskList = mRealm.copyFromRealm(check)
+
+                // TaskのListView用のアダプタに渡す
+                listView1.adapter = mTaskAdapter
+
+                // 表示を更新するために、アダプターにデータが変更されたことを知らせる
+                mTaskAdapter.notifyDataSetChanged()
+
+                return false
+            }
+            override fun onQueryTextSubmit(query: String): Boolean {
+                // submit button pressed
+                Log.d("Check", query)
+                val check = mRealm.where(Task::class.java).equalTo("category", query).findAll()
+                mTaskAdapter.taskList = mRealm.copyFromRealm(check)
+
+                // TaskのListView用のアダプタに渡す
+                listView1.adapter = mTaskAdapter
+
+                // 表示を更新するために、アダプターにデータが変更されたことを知らせる
+                mTaskAdapter.notifyDataSetChanged()
+                Log.d("Exam", check.toString())
+
+                return false
+            }
+        })
 
     }
 
